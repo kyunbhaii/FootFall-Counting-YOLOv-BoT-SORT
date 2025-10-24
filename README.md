@@ -14,18 +14,15 @@ The pipeline integrates several layers of filtering and validation to ensure sta
 
 The output video visually overlays bounding boxes, tracking IDs, and live IN/OUT counts, providing both numerical and visual insights into crowd flow dynamics.
 
-⸻
 
 ## Explanation of Counting Logic
 
 The core of this project lies in its line-crossing counting logic, which intelligently determines when and in which direction a tracked person crosses the defined tripwire. Below is a detailed step-by-step breakdown of how this logic works:
 
-⸻
 
 1. Detection and Tracking  
 Each frame is processed through YOLOv8, which detects all persons (class 0). The detected bounding boxes are then passed to BoT-SORT, which assigns a unique tracking ID to every individual. This ID persists across frames, allowing the algorithm to recognize the same person as they move.
 
-⸻
 
 2. Tripwire Definition  
 A tripwire (counting line) is defined by two coordinate points:  
@@ -37,7 +34,6 @@ If the counts appear reversed, the direction tuple can simply be flipped:
 
 `DIRECTION_IN = ('A', 'B')  # Flip direction if needed`
 
-⸻
 
 3. Tracking Point Selection
 
@@ -47,8 +43,6 @@ Rather than using the entire bounding box, the system selects a single represent
 
 This adaptive logic improves accuracy because the tracking point more closely represents the person’s contact with the floor (which is the true crossing reference in most surveillance views).
 
-⸻
-
 4. Detecting Line Crossings
 
 For every tracked person, the algorithm maintains their previous position (p_prev) and current position (p_now). Each frame, it checks:
@@ -56,8 +50,6 @@ For every tracked person, the algorithm maintains their previous position (p_pre
 2. Whether the segment formed by (p_prev → p_now) intersects the tripwire line.
 
 If both conditions are satisfied, a potential crossing event is detected.
-
-⸻
 
 5. Determining the Direction of Crossing
 
@@ -67,15 +59,11 @@ To ensure accurate IN/OUT differentiation, the algorithm computes which side of 
 
 This side comparison ensures that only true crossings (not movements along the line) are counted.
 
-⸻
-
 6. Motion and Cooldown Validation
 
 To enhance robustness:
 - Minimum motion check: Very small movements near the line (e.g., shifting feet or swaying) are ignored.
 - Cooldown period: After a person triggers a count, a brief cooldown period (measured in frames) is applied to their ID. During this time, further crossings by the same person are ignored to prevent double counting from oscillations.
-
-⸻
 
 7. Updating Counts and Visualization
 
