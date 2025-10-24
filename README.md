@@ -25,13 +25,15 @@ Each frame is processed through YOLOv8, which detects all persons (class 0). The
 
 
 2. Tripwire Definition  
-A tripwire (counting line) is defined by two coordinate points:  
+A tripwire (counting line) is defined by two coordinate points:
+
 `COUNT_LINE = (x1, y1, x2, y2)`  
-This line represents a virtual boundary — for example, a door entrance or passage line. The algorithm treats one side of the line as “Side A” and the other as “Side B.”
+
+ This line represents a virtual boundary — for example, a door entrance or passage line. The algorithm treats one side of the line as “Side A” and the other as “Side B.”
  Crossing from Side B → Side A is counted as IN, and the reverse is counted as OUT.  
  If the counts appear reversed, the direction tuple can simply be flipped:
-
-`DIRECTION_IN = ('A', 'B')  # Flip direction if needed`
+ 
+ `DIRECTION_IN = ('A', 'B')  # Flip direction if needed`
 
 
 3. Tracking Point Selection
@@ -39,15 +41,14 @@ Rather than using the entire bounding box, the system selects a single represent
 - At the feet (bottom center of the box) for tall or upright figures, or
 - Near the mid-body for smaller or slanted boxes.
 
- This adaptive logic improves accuracy because the tracking point more closely represents the person’s contact with the floor (which is the true crossing reference in most 
- surveillance views).
+ This adaptive logic improves accuracy because the tracking point more closely represents the person’s contact with the floor (which is the true crossing reference in most surveillance views).
 
 4. Detecting Line Crossings
 For every tracked person, the algorithm maintains their previous position (p_prev) and current position (p_now). Each frame, it checks:
-1. Whether the motion distance between these two points is large enough to be meaningful (MIN_MOTION filter).
-2. Whether the segment formed by (p_prev → p_now) intersects the tripwire line.
+- Whether the motion distance between these two points is large enough to be meaningful (MIN_MOTION filter).
+- Whether the segment formed by (p_prev → p_now) intersects the tripwire line.
 
-If both conditions are satisfied, a potential crossing event is detected.
+ If both conditions are satisfied, a potential crossing event is detected.
 
 5. Determining the Direction of Crossing
 To ensure accurate IN/OUT differentiation, the algorithm computes which side of the line the person is on before and after the movement. This is done using a simple orientation test:
