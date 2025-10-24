@@ -107,9 +107,4 @@ The output provides:
 
 ## Summary
 
-This logic integrates detection, tracking, and geometric reasoning to ensure that only valid, directionally consistent crossings are counted. It is highly adaptable to different camera angles, crowd densities, and motion speeds, making it suitable for real-world applications like:
-
-- Entrance monitoring
-- Retail analytics
-- Transportation flow analysis
-- Crowd management systems
+This logic integrates detection, tracking, and geometric reasoning to ensure that only valid, directionally consistent crossings are counted. It is highly adaptable to different camera angles, crowd densities, and motion speeds.
