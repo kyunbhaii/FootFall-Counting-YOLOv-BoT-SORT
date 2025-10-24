@@ -116,3 +116,5 @@ The output provides:
 ## Summary
 
 This logic integrates detection, tracking, and geometric reasoning to ensure that only valid, directionally consistent crossings are counted. It is highly adaptable to different camera angles, crowd densities, and motion speeds.
+
+Video Link - https://youtu.be/NsOHVdn68GI
