@@ -28,9 +28,8 @@ Each frame is processed through YOLOv8, which detects all persons (class 0). The
 A tripwire (counting line) is defined by two coordinate points:  
 `COUNT_LINE = (x1, y1, x2, y2)`  
 This line represents a virtual boundary — for example, a door entrance or passage line. The algorithm treats one side of the line as “Side A” and the other as “Side B.”
-
-Crossing from Side B → Side A is counted as IN, and the reverse is counted as OUT.  
-If the counts appear reversed, the direction tuple can simply be flipped:
+ Crossing from Side B → Side A is counted as IN, and the reverse is counted as OUT.  
+ If the counts appear reversed, the direction tuple can simply be flipped:
 
 `DIRECTION_IN = ('A', 'B')  # Flip direction if needed`
 
@@ -40,7 +39,8 @@ Rather than using the entire bounding box, the system selects a single represent
 - At the feet (bottom center of the box) for tall or upright figures, or
 - Near the mid-body for smaller or slanted boxes.
 
-This adaptive logic improves accuracy because the tracking point more closely represents the person’s contact with the floor (which is the true crossing reference in most surveillance views).
+ This adaptive logic improves accuracy because the tracking point more closely represents the person’s contact with the floor (which is the true crossing reference in most 
+ surveillance views).
 
 4. Detecting Line Crossings
 For every tracked person, the algorithm maintains their previous position (p_prev) and current position (p_now). Each frame, it checks:
@@ -54,7 +54,7 @@ To ensure accurate IN/OUT differentiation, the algorithm computes which side of 
 - If the person was on Side B in the previous frame and on Side A in the current frame → counted as IN.
 - If the person moved from Side A to Side B → counted as OUT.
 
-This side comparison ensures that only true crossings (not movements along the line) are counted.
+ This side comparison ensures that only true crossings (not movements along the line) are counted.
 
 6. Motion and Cooldown Validation
 To enhance robustness:
@@ -67,9 +67,9 @@ When a valid crossing is confirmed:
 - A color-coded bounding box (green for IN, orange for OUT) and an ID label are drawn.
 - The real-time counts are displayed on the video feed as:
 
-IN : X  
-OUT: Y  
-NET: IN - OUT
+  IN : X  
+  OUT: Y  
+  NET: IN - OUT
 
 8. Result
 The output provides:
