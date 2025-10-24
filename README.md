@@ -36,7 +36,6 @@ If the counts appear reversed, the direction tuple can simply be flipped:
 
 
 3. Tracking Point Selection
-
 Rather than using the entire bounding box, the system selects a single representative point for each person — the tracking point. This point can be:
 - At the feet (bottom center of the box) for tall or upright figures, or
 - Near the mid-body for smaller or slanted boxes.
@@ -44,7 +43,6 @@ Rather than using the entire bounding box, the system selects a single represent
 This adaptive logic improves accuracy because the tracking point more closely represents the person’s contact with the floor (which is the true crossing reference in most surveillance views).
 
 4. Detecting Line Crossings
-
 For every tracked person, the algorithm maintains their previous position (p_prev) and current position (p_now). Each frame, it checks:
 1. Whether the motion distance between these two points is large enough to be meaningful (MIN_MOTION filter).
 2. Whether the segment formed by (p_prev → p_now) intersects the tripwire line.
@@ -52,7 +50,6 @@ For every tracked person, the algorithm maintains their previous position (p_pre
 If both conditions are satisfied, a potential crossing event is detected.
 
 5. Determining the Direction of Crossing
-
 To ensure accurate IN/OUT differentiation, the algorithm computes which side of the line the person is on before and after the movement. This is done using a simple orientation test:
 - If the person was on Side B in the previous frame and on Side A in the current frame → counted as IN.
 - If the person moved from Side A to Side B → counted as OUT.
@@ -60,13 +57,11 @@ To ensure accurate IN/OUT differentiation, the algorithm computes which side of 
 This side comparison ensures that only true crossings (not movements along the line) are counted.
 
 6. Motion and Cooldown Validation
-
 To enhance robustness:
 - Minimum motion check: Very small movements near the line (e.g., shifting feet or swaying) are ignored.
 - Cooldown period: After a person triggers a count, a brief cooldown period (measured in frames) is applied to their ID. During this time, further crossings by the same person are ignored to prevent double counting from oscillations.
 
 7. Updating Counts and Visualization
-
 When a valid crossing is confirmed:
 - The corresponding counter (IN or OUT) is incremented.
 - A color-coded bounding box (green for IN, orange for OUT) and an ID label are drawn.
@@ -77,7 +72,6 @@ OUT: Y
 NET: IN - OUT
 
 8. Result
-
 The output provides:
 - A fully annotated video with bounding boxes, IDs, and tripwire overlay.
 - Final counts summarizing total entries, exits, and net occupancy changes.
