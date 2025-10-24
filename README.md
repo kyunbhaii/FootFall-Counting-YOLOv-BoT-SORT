@@ -95,6 +95,15 @@ When a valid crossing is confirmed:
   NET: IN - OUT
   ```
 
+### 8. Dependencies
+
+- ultralytics – YOLOv8 object detection
+- supervision – Drawing and analytics utilities
+- opencv-python – Video and frame processing
+- numpy – Numerical computations
+- tqdm – Progress bar for frame iteration
+- filterpy, lap – Required for BoT-SORT tracking
+
 ### 8. Result
 
 The output provides:
@@ -103,7 +112,6 @@ The output provides:
 - Final counts summarizing total entries, exits, and net occupancy changes
 - Optional per-frame screenshots and summary statistics (e.g., number of detections filtered, IDs tracked, skipped motion events, etc.)
 
----
 
 ## Summary
 
